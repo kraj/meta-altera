@@ -1,0 +1,10 @@
+The official OpenEmbedded/Yocto BSP layer for Altera SoCFPGA platforms 
+
+This layer works with poky and Angstrom
+
+Please follow the recommended setup procedures of your OE distribution.
+
+
+Send pull requests, patches, comments or questions to yvanderv@opensource.altera.com
+
+Maintainer: yvanderv@opensource.altera.com
