@@ -1,9 +1,9 @@
 PR = "r1"
 
-KERNEL_REPO?="git://git.rocketboards.org/linux-socfpga.git"
-KERNEL_PROT?="http"
-KERNEL_DEFCONFIG?="socfpga_defconfig"
-KERNEL_TAG?="${AUTOREV}"
+KERNEL_REPO ?= "git://git.rocketboards.org/linux-socfpga.git"
+KERNEL_PROT ?= "http"
+KERNEL_DEFCONFIG ?= "socfpga_defconfig"
+KERNEL_TAG ?= "${AUTOREV}"
 
 SRC_URI = "${KERNEL_REPO};protocol=${KERNEL_PROT};branch=${KERNEL_BRANCH}"
 
@@ -13,8 +13,6 @@ inherit kernel
 SECTION = "kernel"
 DESCRIPTION = "Altera Linux kernel"
 LICENSE = "GPLv2"
-
-COMPATIBLE_MACHINE = "socfpga"
 
 LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
