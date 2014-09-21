@@ -6,5 +6,7 @@ Please follow the recommended setup procedures of your OE distribution.
 
 
 Send pull requests, patches, comments or questions to yvanderv@opensource.altera.com
+and raj.khem@gmail.com
 
-Maintainer: yvanderv@opensource.altera.com
+Maintainers: Khem Raj <raj.khem@gmail.com>
+             Yves Vandervennet <yvanderv@opensource.altera.com>
