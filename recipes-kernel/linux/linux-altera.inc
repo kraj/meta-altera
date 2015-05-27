@@ -26,9 +26,9 @@ do_configure() {
 	unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS MACHINE
 	export CROSS_COMPILE="${TARGET_PREFIX}"
 	export ARCH=${ARCH}
-	
+
 	oe_runmake ${MACHINE_DEFCONFIG} CONFIG_BLK_DEV_INITRD=y
-	
+
 	cp .config .config.ori
 
 	grep CONFIG_BLK_DEV_INITRD .config || echo "CONFIG_BLK_DEV_INITRD=y" >> .config
@@ -55,7 +55,7 @@ do_configure() {
 		sed -i "s|^CONFIG_INITRAMFS_ROOT_GID=.*$|# CONFIG_INITRAMFS_ROOT_GID is not set|g" .config
 		sed -i "s|^CONFIG_INITRAMFS_COMPRESSION_NONE=.*$|# CONFIG_INITRAMFS_COMPRESSION_NONE is not set|g" .config
 		oe_runmake oldconfig
-	fi	
+	fi
 }
 
 kernel_do_compile() {
