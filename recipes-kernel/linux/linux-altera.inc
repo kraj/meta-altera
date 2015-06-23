@@ -14,9 +14,9 @@ SECTION = "kernel"
 DESCRIPTION = "Altera Linux kernel"
 LICENSE = "GPLv2"
 
-LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
+LIC_FILES_CHKSUM = "file://${B}/COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
-S = "${WORKDIR}/git"
+B = "${WORKDIR}/git"
 
 MACHINE_DEFCONFIG = "${KERNEL_DEFCONFIG}"
 
@@ -84,7 +84,7 @@ do_deploy_dtb() {
     if test -n "${KERNEL_DEVICETREE}"; then
         for DTB_FILE in ${KERNEL_DEVICETREE}; do
 	    DTB_SYMLINK_NAME="${DTB_FILE}.dtb"
-	    DEVICE_TREE_OUTPUT="${S}/arch/${ARCH}/boot/${DTB_SUBDIR}${DTB_FILE}.dtb"
+	    DEVICE_TREE_OUTPUT="${B}/arch/${ARCH}/boot/${DTB_SUBDIR}${DTB_FILE}.dtb"
             DTB_NAME="${DTB_FILE}-${DATETIME}.dtb"
             if [ ! -f ${DEVICE_TREE_OUTPUT} ]; then
                 echo "Warning: ${DEVICE_TREE_OUTPUT} is not available!"
@@ -102,7 +102,7 @@ addtask deploy_dtb after do_compile_dtb before do_build
 VMLINUX_NAME ?= "vmlinux-${PV}-${PR}-${MACHINE}-${DATETIME}"
 
 kernel_do_deploy_append() {
-	install -m 0644 ${S}/vmlinux ${DEPLOYDIR}/${VMLINUX_NAME}
+	install -m 0644 ${B}/vmlinux ${DEPLOYDIR}/${VMLINUX_NAME}
 	cd ${DEPLOYDIR} &&
 		rm -f vmlinux &&
 		ln -sf ${VMLINUX_NAME} vmlinux
