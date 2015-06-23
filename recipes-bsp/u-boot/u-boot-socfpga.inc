@@ -22,7 +22,7 @@ SRCREV_pn-${PN} = "${UBOOT_TAG}"
 S = "${WORKDIR}/git"
 
 # GCC 4.5.1 builds unusable binaries using -Os, remove it from OPTFLAGS
-EXTRA_OEMAKE = "CROSS_COMPILE=${TARGET_PREFIX}"
+EXTRA_OEMAKE = 'CROSS_COMPILE=${TARGET_PREFIX} CC="${TARGET_PREFIX}gcc ${TOOLCHAIN_OPTIONS}" V=1'
 
 python () {
 	if not d.getVar("UBOOT_MACHINE", True):
