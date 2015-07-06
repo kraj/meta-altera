@@ -14,9 +14,9 @@ SECTION = "kernel"
 DESCRIPTION = "Altera Linux kernel"
 LICENSE = "GPLv2"
 
-LIC_FILES_CHKSUM = "file://${B}/COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
+LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
-B = "${WORKDIR}/git"
+S = "${WORKDIR}/git"
 
 MACHINE_DEFCONFIG = "${KERNEL_DEFCONFIG}"
 
@@ -27,8 +27,9 @@ do_configure() {
 	export CROSS_COMPILE="${TARGET_PREFIX}"
 	export ARCH=${ARCH}
 
-	oe_runmake ${MACHINE_DEFCONFIG} CONFIG_BLK_DEV_INITRD=y
+	oe_runmake -C ${S} O=${B} ${MACHINE_DEFCONFIG} CONFIG_BLK_DEV_INITRD=y
 
+	pushd ${B}
 	cp .config .config.ori
 
 	grep CONFIG_BLK_DEV_INITRD .config || echo "CONFIG_BLK_DEV_INITRD=y" >> .config
@@ -45,7 +46,7 @@ do_configure() {
 		sed -i "s|^.*CONFIG_INITRAMFS_ROOT_UID[ =].*$|CONFIG_INITRAMFS_ROOT_UID=0|g" .config
 		sed -i "s|^.*CONFIG_INITRAMFS_ROOT_GID[ =].*$|CONFIG_INITRAMFS_ROOT_GID=0|g" .config
 		sed -i "s|^.*CONFIG_INITRAMFS_COMPRESSION_NONE[ =].*$|CONFIG_INITRAMFS_COMPRESSION_NONE=y|g" .config
-		oe_runmake oldconfig
+		oe_runmake -C ${S} O=${B} oldconfig
 	else
 		rm -f *.cpio
 		echo "Initramfs disabled or can't find valid initramfs ${INITRAMFS_IMAGE_FILE}"
@@ -54,14 +55,15 @@ do_configure() {
 		sed -i "s|^CONFIG_INITRAMFS_ROOT_UID=.*$|# CONFIG_INITRAMFS_ROOT_UID is not set|g" .config
 		sed -i "s|^CONFIG_INITRAMFS_ROOT_GID=.*$|# CONFIG_INITRAMFS_ROOT_GID is not set|g" .config
 		sed -i "s|^CONFIG_INITRAMFS_COMPRESSION_NONE=.*$|# CONFIG_INITRAMFS_COMPRESSION_NONE is not set|g" .config
-		oe_runmake oldconfig
+		oe_runmake -C ${S} O=${B} oldconfig
 	fi
+	popd
 }
 
 kernel_do_compile() {
         unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS MACHINE
-        oe_runmake __headers CC="${KERNEL_CC}" LD="${KERNEL_LD}"
-        oe_runmake ${KERNEL_IMAGETYPE_FOR_MAKE} ${KERNEL_ALT_IMAGETYPE} CC="${KERNEL_CC}" LD="${KERNEL_LD}" LOADADDR=0x8000
+        oe_runmake -C ${S} O=${B} __headers CC="${KERNEL_CC}" LD="${KERNEL_LD}"
+        oe_runmake -C ${S} O=${B} ${KERNEL_IMAGETYPE_FOR_MAKE} ${KERNEL_ALT_IMAGETYPE} CC="${KERNEL_CC}" LD="${KERNEL_LD}" LOADADDR=0x8000
         if test "${KERNEL_IMAGETYPE_FOR_MAKE}.gz" = "${KERNEL_IMAGETYPE}"; then
                 gzip -9c < "${KERNEL_IMAGETYPE_FOR_MAKE}" > "${KERNEL_OUTPUT}"
         fi
@@ -70,8 +72,8 @@ kernel_do_compile() {
 do_compile_dtb() {
         unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS MACHINE
 	sync
-        oe_runmake ARCH=${ARCH} CROSS_COMPILE="${TARGET_PREFIX}" dtbs ||
-	        oe_runmake ARCH=${ARCH} CROSS_COMPILE="${TARGET_PREFIX}" dtbs
+        oe_runmake -C ${S} O=${B} ARCH=${ARCH} CROSS_COMPILE="${TARGET_PREFIX}" dtbs ||
+	        oe_runmake -C ${S} O=${B} ARCH=${ARCH} CROSS_COMPILE="${TARGET_PREFIX}" dtbs
 }
 
 addtask compile_dtb after do_compile before do_build
