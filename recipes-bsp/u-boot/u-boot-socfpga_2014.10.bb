@@ -37,9 +37,9 @@ DESCRIPTION = "Mainline u-boot bootloader"
 
 LIC_FILES_CHKSUM = "file://Licenses/README;md5=c7383a594871c03da76b3707929d2919"
 
-PV = "v2014.10"
+PV = "2014.10"
 
-UBOOT_BRANCH ?= "socfpga_${PV}_arria10_bringup"
+UBOOT_BRANCH ?= "socfpga_v${PV}_arria10_bringup"
 UBOOT_REPO ?= "git://github.com/altera-opensource/u-boot-socfpga.git"
 UBOOT_PROT ?= "https"
 
