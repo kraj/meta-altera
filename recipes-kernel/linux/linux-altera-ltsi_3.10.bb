@@ -1,5 +1,3 @@
-DTB_SUBDIR="dts/"
-
-require recipes-kernel/linux/linux-altera-ltsi.inc
-COMPATIBLE_MACHINE = "(arria5|cyclone5)"
-
+include linux-altera.inc
+LINUX_VERSION = "3.10"
+LINUX_VERSION_SUFFIX = "-ltsi"

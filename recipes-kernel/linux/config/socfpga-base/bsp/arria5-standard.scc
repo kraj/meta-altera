@@ -1,0 +1,5 @@
+define KMACHINE arria5
+define KTYPE standard
+define KARCH arm
+
+include bsp/include/cyclone5_arria5_arria10.scc

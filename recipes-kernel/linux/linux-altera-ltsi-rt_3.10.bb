@@ -1,7 +1,3 @@
-DTB_SUBDIR="dts/"
-
-KERNEL_BRANCH ?= "socfpga-${PV}-ltsi-rt"
-
-require recipes-kernel/linux/linux-altera.inc
-COMPATIBLE_MACHINE = "(arria5|cyclone5)"
-
+include linux-altera.inc
+LINUX_VERSION = "3.10"
+LINUX_VERSION_SUFFIX = "-ltsi-rt"
