@@ -6,9 +6,9 @@ require conf/machine/include/tune-cortexa9.inc
 # this affects the PREFERRED_PROVIDER of virtual/kernel
 # it can be overriden from the environment, using BB_ENV_EXTRAWHITE
 KERNEL_PROVIDER ?= "linux-altera-ltsi"
-PREFERRED_PROVIDER_virtual/kernel = "${KERNEL_PROVIDER}"
+PREFERRED_PROVIDER_virtual/kernel ?= "${KERNEL_PROVIDER}"
 
-PREFERRED_PROVIDER_virtual/bootloader = "u-boot-socfpga"
+PREFERRED_PROVIDER_virtual/bootloader ?= "u-boot-socfpga"
 
 # Increase this everytime you change something in the kernel
 MACHINE_KERNEL_PR = "r1"
