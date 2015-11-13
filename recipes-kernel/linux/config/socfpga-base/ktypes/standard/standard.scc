@@ -1,0 +1,10 @@
+# Standard linux-xlnx base configuration
+
+kconf non-hardware standard.cfg
+kconf non-hardware cfg/blk.cfg
+kconf non-hardware cfg/fs.cfg
+kconf non-hardware cfg/leds.cfg
+kconf non-hardware cfg/mtd.cfg
+kconf non-hardware cfg/net.cfg
+kconf non-hardware cfg/rtc.cfg
+kconf non-hardware cfg/usb.cfg
