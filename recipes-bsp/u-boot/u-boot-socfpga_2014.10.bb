@@ -45,5 +45,6 @@ UBOOT_PROT ?= "https"
 
 SRC_URI = "${UBOOT_REPO};protocol=${UBOOT_PROT};branch=${UBOOT_BRANCH}"
 
-SRCREV = "${AUTOREV}"
+#SoCEDS 15.1 release
+SRCREV = "21d6a65d68d84efba88ff21ceae9bc8f2aa06857"
 
