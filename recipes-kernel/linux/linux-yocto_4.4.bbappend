@@ -1,5 +1,6 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/config:"
 
+COMPATIBLE_MACHINE_10m50 = "10m50"
 COMPATIBLE_MACHINE_generic-nios2 = "generic-nios2"
 SRC_URI_append_nios2 = " file://defconfig "
 
