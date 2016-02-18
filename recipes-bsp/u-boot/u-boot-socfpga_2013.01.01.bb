@@ -1,4 +1,4 @@
 # SoCEDS 15.1 u-Boot release
-UBOOT_TAG = "353283b6e75eabdcc48dadf08507b4b86c229d78"
+UBOOT_TAG = "d141e218f3195e305c1521a0d67c81b7cb504b71"
 
 require u-boot-socfpga.inc
