@@ -1,5 +1,0 @@
-define KFEATURE_DESCRIPTION "Altera 28nm SoC IP Core Drivers/Support"
-define KFEATURE_COMPATIBILITY board
-
-kconfig hardware cyclone5_arria5-ip.cfg
-
