@@ -1,5 +1,0 @@
-define KFEATURE_DESCRIPTION "Altera 20nm SoC IP Core Drivers/Support"
-define KFEATURE_COMPATIBILITY board
-
-kconfig hardware arria10-ip.cfg
-

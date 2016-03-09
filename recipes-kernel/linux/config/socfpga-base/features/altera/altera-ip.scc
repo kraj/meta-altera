@@ -1,5 +1,0 @@
-define KFEATURE_DESCRIPTION "Altera Soft IP Core Drivers/Support"
-define KFEATURE_COMPATIBILITY board
-
-kconfig hardware altera-ip.cfg
-
