@@ -1,3 +1,3 @@
-LINUX_VERSION = "4.3"
+LINUX_VERSION = "4.4"
 
 include linux-altera.inc
