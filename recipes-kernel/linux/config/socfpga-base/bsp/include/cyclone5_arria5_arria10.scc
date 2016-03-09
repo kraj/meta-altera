@@ -1,8 +1,0 @@
-include ktypes/standard/standard.scc
-
-include features/altera/cyclone5_arria5-ip.scc
-include features/altera/arria10-ip.scc
-include features/altera/altera-ip.scc
-include features/altera/board-common.scc
-kconfig hardware features/altera/cyclone5_arria5-arm.cfg
-
