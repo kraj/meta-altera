@@ -5,13 +5,7 @@ This layer works with poky and Angstrom
 Please follow the recommended setup procedures of your OE distribution.
 
 
-Send pull requests, patches, comments or questions to yvanderv@opensource.altera.com
-and raj.khem@gmail.com
-
-Maintainers: Khem Raj <raj.khem@gmail.com>
-             Yves Vandervennet <yvanderv@opensource.altera.com>
-
-Specifying Kernel Versions
+Choosing Kernel Versions
 ==========================
 This layer has a few providers for the kernel.  These are the linux-altera, 
 linux-altera-ltsi, and linux-altera-ltsi-rt kernels.  There are also 
@@ -32,7 +26,7 @@ Please note that older kernels will not compile with GCC 5+ and you will need
 to specify in your conf/local.conf to revert to older 4.9 toolchain. 
 
 
-Specifying Toolchain Versions
+Choosing Toolchain Versions
 =============================
 The default Toolchain for ARM in Angstrom is the linaro toolchain.  To specify
 the use of this toolchain in Yocto add the following to conf/local.conf
@@ -53,3 +47,9 @@ For Angstrom:
 	ANGSTROM_GCC_VERSION_arm = "linaro-4.9%"
 
 
+
+Send pull requests, patches, comments or questions to yvanderv@opensource.altera.com
+and raj.khem@gmail.com
+
+Maintainers: Khem Raj <raj.khem@gmail.com>
+             Yves Vandervennet <yvanderv@opensource.altera.com>
