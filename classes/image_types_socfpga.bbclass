@@ -1,12 +1,10 @@
 inherit image_types
 
-IMAGE_BOOTLOADER ?= "u-boot-socfpga"
 SDCARD_ROOTFS ?= "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.ext3"
 
 # Boot partition size [in KiB]
 IMAGE_ROOTFS_ALIGNMENT_cyclone5 ?= "2048"
 IMAGE_ROOTFS_ALIGNMENT_arria5 ?= "2048"
-IMAGE_ROOTFS_ALIGNMENT_arria10 ?= "10240"
 
 BOOT_SPACE ?= "102400"
 
@@ -14,7 +12,7 @@ IMAGE_DEPENDS_sdcard = "parted-native:do_populate_sysroot \
                         dosfstools-native:do_populate_sysroot \
                         mtools-native:do_populate_sysroot \
                         virtual/kernel:do_deploy \
-                        ${@d.getVar('IMAGE_BOOTLOADER', True) and d.getVar('IMAGE_BOOTLOADER', True) + ':do_deploy' or ''}"
+                        virtual/bootloader:do_deploy"
 
 SDCARD_GENERATION_COMMAND_cyclone5 = "generate_28nm_sdcard"
 SDCARD_GENERATION_COMMAND_arria5 = "generate_28nm_sdcard"
@@ -70,25 +68,25 @@ generate_28nm_sdcard () {
 	# Create partition table
 	parted -s ${SDCARD} mklabel msdos
 	parted -s ${SDCARD} unit KiB mkpart primary fat32 ${IMAGE_ROOTFS_ALIGNMENT} $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED})
-	parted -s ${SDCARD} unit KiB mkpart primary $(expr  ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ $ROOTFS_SIZE)	
+	parted -s ${SDCARD} unit KiB mkpart primary $(expr  ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ $ROOTFS_SIZE)
 	parted -s ${SDCARD} unit KiB mkpart primary 1024 2048
-	
-	#set part 3 to type a2 for spl / uboot image 
+
+	#set part 3 to type a2 for spl / uboot image
 	echo -ne "\xa2" | dd of=${SDCARD} bs=1 count=1 seek=482 conv=notrunc
-	
-	
+
+
 	if [ -e "${DEPLOY_DIR_IMAGE}/${SPL_BINARY}-${UBOOT_CONFIG}" ]
 	then
-	    dd if=${DEPLOY_DIR_IMAGE}/${SPL_BINARY}-${UBOOT_CONFIG} of=${SDCARD} conv=notrunc seek=1 bs=$(expr 1024 \* 1024)
-	elsif [ -e "${DEPLOY_DIR_IMAGE}/${SPL_BINARY}-${UBOOT_CONFIG}" ]
-	then 
-		dd if=${DEPLOY_DIR_IMAGE}/${SPL_BINARY} of=${SDCARD} conv=notrunc seek=1 bs=$(expr 1024 \* 1024)
+            dd if=${DEPLOY_DIR_IMAGE}/${SPL_BINARY}-${UBOOT_CONFIG} of=${SDCARD} conv=notrunc seek=1 bs=$(expr 1024 \* 1024)
+	elif [ -e "${DEPLOY_DIR_IMAGE}/${SPL_BINARY}-${UBOOT_CONFIG}" ]
+	then
+            dd if=${DEPLOY_DIR_IMAGE}/${SPL_BINARY} of=${SDCARD} conv=notrunc seek=1 bs=$(expr 1024 \* 1024)
 	else
-		bbfatal "${SPL_BINARY} does not exist."
+            bbfatal "${SPL_BINARY} does not exist."
 	fi
-	
+
 	parted ${SDCARD} print
-	
+
 	_generate_boot_image 1
 	# Burn Partition
 	dd if=${WORKDIR}/boot.img of=${SDCARD} conv=notrunc,fsync seek=1 bs=$(expr ${IMAGE_ROOTFS_ALIGNMENT} \* 1024)
@@ -105,7 +103,7 @@ IMAGE_CMD_sdcard () {
 	BOOT_SPACE_ALIGNED=$(expr ${BOOT_SPACE} + ${IMAGE_ROOTFS_ALIGNMENT} - 1)
 	BOOT_SPACE_ALIGNED=$(expr ${BOOT_SPACE_ALIGNED} - ${BOOT_SPACE_ALIGNED} % ${IMAGE_ROOTFS_ALIGNMENT})
 	SDCARD_SIZE=$(expr ${IMAGE_ROOTFS_ALIGNMENT} + ${BOOT_SPACE_ALIGNED} + $ROOTFS_SIZE + ${IMAGE_ROOTFS_ALIGNMENT})
-	
+
 	# Initialize a sparse file
 	if [ "x${UBOOT_CONFIG}" != "x" ]
 	then
@@ -114,8 +112,8 @@ IMAGE_CMD_sdcard () {
 		SDCARD="${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.sdcard"
 	fi
 	dd if=/dev/zero of=${SDCARD} bs=1 count=0 seek=$(expr 1024 \* ${SDCARD_SIZE})
-	
-	${SDCARD_GENERATION_COMMAND} 
+
+	${SDCARD_GENERATION_COMMAND}
 }
 
 # The sdcard requires the rootfs filesystem to be built before using
