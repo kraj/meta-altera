@@ -5,7 +5,7 @@ SRCREV = "0e938a8fafccb73ad70781ed62abda2b554eafb4"
 
 include linux-altera.inc
 
-FILESEXTRAPATHS := "${FILE_DIRNAME}/linux-altera-ltsi:"
+FILESEXTRAPATHS .= "${FILE_DIRNAME}/linux-altera-ltsi:"
 
 SRC_URI += "\
            file://0001-compiler-gcc-integrate-the-various-compiler-gcc-345-.patch \
