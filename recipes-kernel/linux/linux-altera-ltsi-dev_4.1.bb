@@ -3,7 +3,7 @@ LINUX_VERSION_SUFFIX = "-ltsi"
 
 include linux-altera.inc
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-altera-ltsi:"
+FILESEXTRAPATHS := "${FILE_DIRNAME}/linux-altera-ltsi:"
 
 SRC_URI += "\
            file://0001-compiler-gcc-integrate-the-various-compiler-gcc-345-.patch \
