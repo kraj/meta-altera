@@ -1,6 +1,6 @@
 inherit image_types
 
-SDCARD_ROOTFS ?= "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.ext3"
+SDCARD_ROOTFS ?= "${IMGDEPLOYDIR}/${IMAGE_NAME}.rootfs.ext3"
 
 # Boot partition size [in KiB]
 IMAGE_ROOTFS_ALIGNMENT_cyclone5 ?= "2048"
