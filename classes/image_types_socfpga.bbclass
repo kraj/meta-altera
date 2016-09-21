@@ -107,11 +107,14 @@ IMAGE_CMD_sdcard () {
 	# Initialize a sparse file
 	if [ "x${UBOOT_CONFIG}" != "x" ]
 	then
-		SDCARD="${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}-${UBOOT_CONFIG}.rootfs.sdcard"
+		SDCARD_NAME="${IMAGE_NAME}-${UBOOT_CONFIG}.rootfs.sdcard"
 	else
-		SDCARD="${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.sdcard"
+		SDCARD_NAME="${IMAGE_NAME}.rootfs.sdcard"
 	fi
+	SDCARD="${DEPLOY_DIR_IMAGE}/${SDCARD_NAME}"
 	dd if=/dev/zero of=${SDCARD} bs=1 count=0 seek=$(expr 1024 \* ${SDCARD_SIZE})
+	rm -f ${DEPLOY_DIR_IMAGE}/${IMAGE_LINK_NAME}.sdcard
+	ln -s ${SDCARD_NAME} ${DEPLOY_DIR_IMAGE}/${IMAGE_LINK_NAME}.sdcard
 
 	${SDCARD_GENERATION_COMMAND}
 }
