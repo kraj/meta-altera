@@ -48,3 +48,4 @@ SRC_URI = "${UBOOT_REPO};protocol=${UBOOT_PROT};branch=${UBOOT_BRANCH}"
 #SoCEDS 15.1 release
 SRCREV = "2c7fd1aac5f06ceea822c4d6a8af9ea2b11fdfd4"
 
+PV_append = "+git${SRCPV}"
