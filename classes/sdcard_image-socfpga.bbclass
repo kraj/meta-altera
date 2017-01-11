@@ -29,6 +29,9 @@ FAT_SPACE ?= "102400"
 # of the uboot image in the sdcard to 0xa00 sector
 IMAGE_ROOTFS_ALIGNMENT = "1024"
 
+# ROOTFS_SIZE_MOD ?= "524288"
+ROOTFS_SIZE_MOD ?= "16384"
+
 # Use an uncompressed ext3 by default as rootfs
 SDIMG_ROOTFS_TYPE = "ext3"
 SDIMG_ROOTFS = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.${SDIMG_ROOTFS_TYPE}"
@@ -62,13 +65,18 @@ generate_sdcard_partitions_v2016_05_and_earlier () {
 	# P1: Fat partition
 	parted -s ${SDIMG} unit KiB mkpart primary fat32 $(expr  ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED})
 	# P2: Linux FS partition
-	parted -s ${SDIMG} unit KiB mkpart primary $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED} \+ $ROOTFS_SIZE)
+	parted -s ${SDIMG} unit KiB mkpart primary $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED} \+ ${ROOTFS_SIZE_ALIGNED})
 	# P3: A2 partition for bootloader
 	parted -s ${SDIMG} unit KiB mkpart primary ${IMAGE_ROOTFS_ALIGNMENT} $(expr ${BOOT_SPACE_ALIGNED} \+ ${IMAGE_ROOTFS_ALIGNMENT})
 
 	# set part 3 to type a2 for spl / uboot image
 	# 446 to partition table, 16 bytes per entry, 4 byte offset to partition type
 	echo -ne "\xa2" | dd of=${SDIMG} bs=1 count=1 seek=$(expr 446 + 16 + 16 + 4) conv=notrunc && sync && sync
+	
+	# Create a vfat image with boot files
+	FAT_BLOCKS=$(LC_ALL=C parted -s ${SDIMG} unit b print | awk '/ 1 / { print substr($4, 1, length($4 -1)) / 512 /2 }')
+	rm -f ${WORKDIR}/fat.img
+	mkfs.vfat -n "${BOOTDD_VOLUME_ID}" -S 512 -C ${WORKDIR}/fat.img $FAT_BLOCKS
 	
 }
 
@@ -79,13 +87,20 @@ generate_sdcard_partitions_v2016_11_and_newer () {
 	# P1: A2 partition for bootloader
 	parted -s ${SDIMG} unit KiB mkpart primary ${IMAGE_ROOTFS_ALIGNMENT} $(expr ${BOOT_SPACE_ALIGNED} \+ ${IMAGE_ROOTFS_ALIGNMENT})
 	# P2: Fat partition
-	parted -s ${SDIMG} unit KiB mkpart primary fat32 $(expr  ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED})
+	parted -s ${SDIMG} unit KiB mkpart primary fat32 $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED})
 	# P3: Linux FS partition
-	parted -s ${SDIMG} unit KiB mkpart primary $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED} \+ $ROOTFS_SIZE)
-
+#	parted -s ${SDIMG} unit KiB mkpart primary $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED}) $(expr ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED} \+ ${ROOTFS_SIZE_ALIGNED})
+	parted -s ${SDIMG} unit KiB mkpart primary $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED} \+ ${ROOTFS_SIZE_ALIGNED})
+	
 	# set part 1 to type a2 for spl / uboot image
 	# 446 to partition table, 16 bytes per entry, 4 byte offset to partition type
 	echo -ne "\xa2" | dd of=${SDIMG} bs=1 count=1 seek=$(expr 446 + 4) conv=notrunc && sync && sync
+	
+	# Create a vfat image with boot files
+	FAT_BLOCKS=$(LC_ALL=C parted -s ${SDIMG} unit b print | awk '/ 2 / { print substr($4, 1, length($4 -1)) / 512 /2 }')
+	rm -f ${WORKDIR}/fat.img
+	mkfs.vfat -n "${BOOTDD_VOLUME_ID}" -S 512 -C ${WORKDIR}/fat.img $FAT_BLOCKS
+	
 }
 
 IMAGE_CMD_socfpga-sdimg () {
@@ -95,7 +110,11 @@ IMAGE_CMD_socfpga-sdimg () {
 	BOOT_SPACE_ALIGNED=$(expr ${BOOT_SPACE_ALIGNED} - ${BOOT_SPACE_ALIGNED} % ${IMAGE_ROOTFS_ALIGNMENT})
 	FAT_SPACE_ALIGNED=$(expr ${FAT_SPACE} + ${IMAGE_ROOTFS_ALIGNMENT} - 1)  
 	FAT_SPACE_ALIGNED=$(expr ${FAT_SPACE_ALIGNED} - ${FAT_SPACE_ALIGNED} % ${IMAGE_ROOTFS_ALIGNMENT})
-	SDIMG_SIZE=$(expr ${IMAGE_ROOTFS_ALIGNMENT} + ${BOOT_SPACE_ALIGNED} + ${FAT_SPACE_ALIGNED} + $ROOTFS_SIZE + ${IMAGE_ROOTFS_ALIGNMENT})
+	
+	ROOTFS_SIZE_ALIGNED=$(expr ${ROOTFS_SIZE} \+ ${ROOTFS_SIZE_MOD})
+	ROOTFS_SIZE_ALIGNED=$(expr ${ROOTFS_SIZE_ALIGNED} \- ${ROOTFS_SIZE_ALIGNED} \% ${ROOTFS_SIZE_MOD})
+	
+	SDIMG_SIZE=$(expr ${IMAGE_ROOTFS_ALIGNMENT} + ${BOOT_SPACE_ALIGNED} + ${FAT_SPACE_ALIGNED} + ${ROOTFS_SIZE_ALIGNED} + ${IMAGE_ROOTFS_ALIGNMENT})
 	
 	# Initialize sdcard image file
 	dd if=/dev/zero of=${SDIMG} bs=1 count=0 seek=$(expr 1024 \* ${SDIMG_SIZE}) && sync && sync
@@ -103,11 +122,6 @@ IMAGE_CMD_socfpga-sdimg () {
 	# Create partition table
 	${SOCFPGA_SDIMG_PARTITION_COMMAND}
 
-	# Create a vfat image with boot files
-	FAT_BLOCKS=$(LC_ALL=C parted -s ${SDIMG} unit b print | awk '/ 1 / { print substr($4, 1, length($4 -1)) / 512 /2 }')
-	rm -f ${WORKDIR}/fat.img
-	mkfs.vfat -n "${BOOTDD_VOLUME_ID}" -S 512 -C ${WORKDIR}/fat.img $FAT_BLOCKS
-	
 	# Copy kernel image
 	mcopy -i ${WORKDIR}/fat.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${MACHINE}.bin ::/${KERNEL_IMAGETYPE}
 	
