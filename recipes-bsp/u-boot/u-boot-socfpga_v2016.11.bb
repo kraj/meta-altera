@@ -7,4 +7,3 @@ require ${COREBASE}/meta/recipes-bsp/u-boot/u-boot.inc
 SRCREV = "29e0cfb4f77f7aa369136302cee14a91e22dca71"
 
 DEPENDS += "dtc-native"
-
