@@ -7,7 +7,10 @@ UBOOT_BRANCH ?= "socfpga_${PV}_arria10_bringup"
 UBOOT_REPO ?= "git://github.com/altera-opensource/u-boot-socfpga.git"
 UBOOT_PROT ?= "https"
 
-SRC_URI = "${UBOOT_REPO};protocol=${UBOOT_PROT};branch=${UBOOT_BRANCH}"
+SRC_URI = "\
+	${UBOOT_REPO};protocol=${UBOOT_PROT};branch=${UBOOT_BRANCH} \
+	file://v2014.10/fix-build-error-under-gcc6.patch \
+	"
 
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://Licenses/README;md5=c7383a594871c03da76b3707929d2919"
