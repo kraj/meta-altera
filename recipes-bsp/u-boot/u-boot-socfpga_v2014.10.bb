@@ -9,7 +9,7 @@ UBOOT_PROT ?= "https"
 
 SRC_URI = "\
 	${UBOOT_REPO};protocol=${UBOOT_PROT};branch=${UBOOT_BRANCH} \
-	file://v2014.10/fix-build-error-under-gcc6.patch \
+	file://fix-build-error-under-gcc6.patch \
 	"
 
 LICENSE = "GPLv2+"
