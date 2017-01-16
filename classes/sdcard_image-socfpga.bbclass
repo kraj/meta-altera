@@ -34,7 +34,7 @@ ROOTFS_SIZE_MOD ?= "16384"
 
 # Use an uncompressed ext3 by default as rootfs
 SDIMG_ROOTFS_TYPE = "ext3"
-SDIMG_ROOTFS = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.${SDIMG_ROOTFS_TYPE}"
+SDIMG_ROOTFS = "${IMGDEPLOYDIR}/${IMAGE_NAME}.rootfs.${SDIMG_ROOTFS_TYPE}"
 
 
 IMAGE_DEPENDS_socfpga-sdimg += " \
@@ -48,7 +48,7 @@ IMAGE_DEPENDS_socfpga-sdimg += " \
 rootfs[depends] += "virtual/kernel:do_deploy"
 
 # SD card image name
-SDIMG = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.socfpga-sdimg"
+SDIMG = "${IMGDEPLOYDIR}/${IMAGE_NAME}.rootfs.socfpga-sdimg"
 
 IMAGEDATESTAMP = "${@time.strftime('%Y.%m.%d',time.gmtime())}"
 
