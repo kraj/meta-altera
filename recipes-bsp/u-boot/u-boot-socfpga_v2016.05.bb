@@ -5,5 +5,5 @@ require ${COREBASE}/meta/recipes-bsp/u-boot/u-boot.inc
 # We use the revision in order to avoid having to fetch it from the
 # repo during parse 
 SRCREV = "aeaec0e682f45b9e0c62c522fafea353931f73ed"
-
+PR = "r1"
 DEPENDS += "dtc-native"
