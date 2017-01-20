@@ -10,13 +10,14 @@ ENV_BASE_NAME ??= "${UBOOT_CONFIG}"
 ENV_BASE_FILE = "${WORKDIR}/${ENV_BASE_NAME}.env"
 
 do_environment_mkimage() {
-	if  [ -e ${WORKDIR}/${PV}/${ENV_BASE_NAME}.env ]; then
-		mkenvimage -s ${ENV_SIZE} -o ${WORKDIR}/${ENV_BASE_NAME}.bin ${WORKDIR}/${PV}/${ENV_BASE_NAME}.env
+	if  [ -e "${WORKDIR}/${ENV_BASE_NAME}.env" ]; then
+		mkenvimage -s ${ENV_SIZE} -o ${WORKDIR}/${ENV_BASE_NAME}.bin ${WORKDIR}/${ENV_BASE_NAME}.env
 	fi
 }
 
 do_deploy_append() {
-    if [ -e ${WORKDIR}/${ENV_BASE_NAME}.bin]; then
+
+    if [ -e "${WORKDIR}/${ENV_BASE_NAME}.bin" ]; then
 	install -d ${DEPLOYDIR}
     	install -m 644 ${WORKDIR}/${ENV_BASE_NAME}.bin ${DEPLOYDIR}/u-boot-env-${ENV_BASE_NAME}.bin
     fi
