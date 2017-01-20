@@ -26,6 +26,7 @@ FAT_SPACE ?= "102400"
 
 # uBoot ENV offset
 SDIMG_UBOOT_ENV_OFFSET ?= "512"
+ENV_BASE_NAME ??= "${UBOOT_CONFIG}" 
 
 # Boot partition begin at sector 1024
 # This is required as for c5/a5 mainline uboot hard codes the location
@@ -173,7 +174,7 @@ IMAGE_CMD_socfpga-sdimg () {
 	fi
 	
 	if [ -e "${DEPLOY_DIR_IMAGE}/u-boot-env-${ENV_BASE_NAME}.bin" ]; then 
-		dd if=${DEPLOY_DIR_IMAGE}/u-boot-env-${ENV_BASE_NAME}.bin of=${SDIMG} bs=1 seek=${SDIMG_UBOOT_ENV_OFFSET}
+		dd if=${DEPLOY_DIR_IMAGE}/u-boot-env-${ENV_BASE_NAME}.bin of=${SDIMG} conv=notrunc bs=1 seek=${SDIMG_UBOOT_ENV_OFFSET} && sync && sync
 	fi
 	
 }
