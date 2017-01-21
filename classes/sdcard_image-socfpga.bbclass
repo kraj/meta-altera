@@ -24,6 +24,9 @@ BOOT_SPACE ?= "2048"
 # Fat partition size
 FAT_SPACE ?= "102400"
 
+# uBoot ENV offset
+SDIMG_UBOOT_ENV_OFFSET ?= "512"
+
 # Boot partition begin at sector 1024
 # This is required as for c5/a5 mainline uboot hard codes the location
 # of the uboot image in the sdcard to 0xa00 sector
@@ -167,6 +170,10 @@ IMAGE_CMD_socfpga-sdimg () {
             dd if=${DEPLOY_DIR_IMAGE}/${SPL_BINARY} of=${SDIMG} conv=notrunc seek=1 bs=$(expr ${IMAGE_ROOTFS_ALIGNMENT} \* 1024) && sync && sync
 	else
             bbfatal "${SPL_BINARY} does not exist."
-	fi	
+	fi
+	
+	if [ -e "${DEPLOY_DIR_IMAGE}/u-boot-env-${ENV_BASE_NAME}.bin" ]; then 
+		dd if=${DEPLOY_DIR_IMAGE}/u-boot-env-${ENV_BASE_NAME}.bin of=${SDIMG} bs=1 seek=${SDIMG_UBOOT_ENV_OFFSET}
+	fi
 	
 }
