@@ -13,6 +13,7 @@ PR = "r1"
 
 SRC_URI_append = "\
 	file://de0-nano-soc.env \
+	file://cyclone5-socdk.env \
 	"
 
 DEPENDS += "dtc-native"
