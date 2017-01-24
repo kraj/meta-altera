@@ -2,7 +2,7 @@ require u-boot-socfpga-common.inc
 require u-boot-socfpga-env.inc
 require ${COREBASE}/meta/recipes-bsp/u-boot/u-boot.inc
 
-FILESEXTRAPATHS =. "${THISDIR}/files/v2016.11:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/files/v2016.11:"
 
 # This revision corresponds to the tag "v2016.11"
 # We use the revision in order to avoid having to fetch it from the
@@ -17,3 +17,4 @@ SRC_URI_append = "\
 	"
 
 DEPENDS += "dtc-native"
+DEPENDS += "u-boot-mkimage-native"
