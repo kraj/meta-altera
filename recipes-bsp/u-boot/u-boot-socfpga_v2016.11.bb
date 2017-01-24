@@ -17,3 +17,4 @@ SRC_URI_append = "\
 	"
 
 DEPENDS += "dtc-native"
+DEPENDS += "u-boot-mkimage-native"
