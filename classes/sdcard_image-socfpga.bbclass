@@ -60,9 +60,9 @@ IMAGEDATESTAMP = "${@time.strftime('%Y.%m.%d',time.gmtime())}"
 # result we need 2 different functions for creating the boot partitions just to
 # change the partition creation order
 
-SOCFPGA_SDIMG_PARTITION_COMMAND ?= "generate_sdcard_partitions_v2016_05_and_earlier"
+SOCFPGA_SDIMG_PARTITION_COMMAND ?= "generate_sdcard_partitions"
 
-generate_sdcard_partitions_v2016_05_and_earlier () {
+generate_sdcard_partitions () {
 
 	# Create partition table
 	parted -s ${SDIMG} mklabel msdos
@@ -70,6 +70,8 @@ generate_sdcard_partitions_v2016_05_and_earlier () {
 	parted -s ${SDIMG} unit KiB mkpart primary fat32 $(expr  ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED})
 	# P2: Linux FS partition
 	parted -s ${SDIMG} unit KiB mkpart primary $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED} \+ ${ROOTFS_SIZE_ALIGNED})
+	# set linux partition as bootable for distroboot
+	parted -s ${SDIMG} set 2 boot on
 	# P3: A2 partition for bootloader
 	parted -s ${SDIMG} unit KiB mkpart primary ${IMAGE_ROOTFS_ALIGNMENT} $(expr ${BOOT_SPACE_ALIGNED} \+ ${IMAGE_ROOTFS_ALIGNMENT})
 
@@ -79,29 +81,6 @@ generate_sdcard_partitions_v2016_05_and_earlier () {
 	
 	# Create a vfat image with boot files
 	FAT_BLOCKS=$(LC_ALL=C parted -s ${SDIMG} unit b print | awk '/ 1 / { print substr($4, 1, length($4 -1)) / 512 /2 }')
-	rm -f ${WORKDIR}/fat.img
-	mkfs.vfat -n "${BOOTDD_VOLUME_ID}" -S 512 -C ${WORKDIR}/fat.img $FAT_BLOCKS
-	
-}
-
-generate_sdcard_partitions_v2016_11_and_newer () {
-
-	# Create partition table
-	parted -s ${SDIMG} mklabel msdos
-	# P1: A2 partition for bootloader
-	parted -s ${SDIMG} unit KiB mkpart primary ${IMAGE_ROOTFS_ALIGNMENT} $(expr ${BOOT_SPACE_ALIGNED} \+ ${IMAGE_ROOTFS_ALIGNMENT})
-	# P2: Fat partition
-	parted -s ${SDIMG} unit KiB mkpart primary fat32 $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED})
-	# P3: Linux FS partition
-#	parted -s ${SDIMG} unit KiB mkpart primary $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED}) $(expr ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED} \+ ${ROOTFS_SIZE_ALIGNED})
-	parted -s ${SDIMG} unit KiB mkpart primary $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED} \+ ${ROOTFS_SIZE_ALIGNED})
-	
-	# set part 1 to type a2 for spl / uboot image
-	# 446 to partition table, 16 bytes per entry, 4 byte offset to partition type
-	echo -ne "\xa2" | dd of=${SDIMG} bs=1 count=1 seek=$(expr 446 + 4) conv=notrunc && sync && sync
-	
-	# Create a vfat image with boot files
-	FAT_BLOCKS=$(LC_ALL=C parted -s ${SDIMG} unit b print | awk '/ 2 / { print substr($4, 1, length($4 -1)) / 512 /2 }')
 	rm -f ${WORKDIR}/fat.img
 	mkfs.vfat -n "${BOOTDD_VOLUME_ID}" -S 512 -C ${WORKDIR}/fat.img $FAT_BLOCKS
 	
