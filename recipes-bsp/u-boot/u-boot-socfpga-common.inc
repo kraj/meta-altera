@@ -9,3 +9,8 @@ PV_append = "+git${SRCPV}"
 SRC_URI = "git://git.denx.de/u-boot.git;branch=master"
 
 S = "${WORKDIR}/git"
+
+PROVIDES += "u-boot"                                                            
+PKG_${PN} = "u-boot"                                                            
+PKG_${PN}-dev = "u-boot-dev"                                                    
+PKG_${PN}-dbg = "u-boot-dbg"
