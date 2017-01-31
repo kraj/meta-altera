@@ -68,10 +68,10 @@ generate_sdcard_partitions () {
 	parted -s ${SDIMG} mklabel msdos
 	# P1: Fat partition
 	parted -s ${SDIMG} unit KiB mkpart primary fat32 $(expr  ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED})
+	# set fat partition as bootable for distroboot
+	parted -s ${SDIMG} set 1 boot on
 	# P2: Linux FS partition
 	parted -s ${SDIMG} unit KiB mkpart primary $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${FAT_SPACE_ALIGNED} \+ ${ROOTFS_SIZE_ALIGNED})
-	# set linux partition as bootable for distroboot
-	parted -s ${SDIMG} set 2 boot on
 	# P3: A2 partition for bootloader
 	parted -s ${SDIMG} unit KiB mkpart primary ${IMAGE_ROOTFS_ALIGNMENT} $(expr ${BOOT_SPACE_ALIGNED} \+ ${IMAGE_ROOTFS_ALIGNMENT})
 
@@ -126,6 +126,19 @@ IMAGE_CMD_socfpga-sdimg () {
 				fi
 			fi
 		done
+	fi
+
+	# copy extlinux stuff
+	if [ "${UBOOT_EXTLINUX}" = "1" ]
+	then
+		if [ -e "${DEPLOY_DIR_IMAGE}/extlinux.conf" ]
+		then
+			rm -Rf ${WORKDIR}/extlinux
+			mkdir ${WORKDIR}/extlinux
+			cp ${DEPLOY_DIR_IMAGE}/extlinux.conf ${WORKDIR}/extlinux/
+			mcopy -i ${WORKDIR}/fat.img -s ${WORKDIR}/extlinux ::/
+		fi
+		
 	fi
 
 	# Add stamp file
