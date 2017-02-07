@@ -141,6 +141,15 @@ IMAGE_CMD_socfpga-sdimg () {
 		
 	fi
 
+	# copy any files listed as extra files
+	if test -n "${SOCFPGA_SDIMG_EXTRA_FILES}"; then 
+		for EXTRA_FILE in ${SOCFPGA_SDIMG_EXTRA_FILES}; do
+			if [ -e "${DEPLOY_DIR_IMAGE}/${EXTRA_FILE}" ]; then
+				mcopy -i ${WORKDIR}/fat.img -s ${DEPLOY_DIR_IMAGE}/${EXTRA_FILE} ::/${EXTRA_FILE}
+			fi
+		done
+	fi
+
 	# Add stamp file
 	echo "${IMAGE_NAME}-${IMAGEDATESTAMP}" > ${WORKDIR}/image-version-info
 	mcopy -i ${WORKDIR}/fat.img -v ${WORKDIR}//image-version-info ::
