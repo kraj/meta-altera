@@ -48,6 +48,12 @@ TUNE_PKGARCH .= "${@bb.utils.contains("TUNE_FEATURES", "fpu-customdiv", "-fpudiv
 TUNECONFLICTS[fpu-custom] = "fpu-soft fpu-customdiv"
 TUNECONFLICTS[fpu-customdiv] = "fpu-soft fpu-custom"
 
+# Nios2 R2 BMX opcodes
+TUNEVALID[bmx] = "Enable Nios2 R2 Bit Manipulation Extension."
+TUNECONFLICTS[bmx] = "nios2 bigendian"
+TUNE_CCARGS .= "${@bb.utils.contains("TUNE_FEATURES", "bmx", " -mbmx", "" ,d)}"
+TUNE_PKGARCH .= "${@bb.utils.contains("TUNE_FEATURES", "bmx", "-bmx", "" ,d)}"
+
 # Architecture configuration
 AVAILTUNES += "nios2 nios2eb nios2r2"
 
