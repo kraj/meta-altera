@@ -3,8 +3,8 @@
 
 DEFAULTTUNE ?= "nios2"
 
-TUNE_ARCH = "nios2el"
-TUNE_PKGARCH = "nios2"
+TUNE_ARCH = "nios2"
+TUNE_PKGARCH = "${DEFAULTTUNE}"
 TUNE_CCARGS .= " -mel"
 
 # Multiply opcodes
@@ -41,7 +41,7 @@ TUNECONFLICTS[fpu-customdiv] = "fpu-soft fpu-custom"
 
 # Architecture configuration
 AVAILTUNES += "nios2"
-TUNEVALID[nios2] = "nios2"
-TUNE_FEATURES_tune-nios2 += "nios2"
 
+TUNEVALID[nios2] = "Nios2 R1 Little-Endian"
+TUNE_FEATURES_tune-nios2 = "nios2"
 PACKAGE_EXTRA_ARCHS_tune-nios2 = "${TUNE_PKGARCH}"
