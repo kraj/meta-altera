@@ -6,8 +6,14 @@ DEFAULTTUNE ?= "nios2"
 TUNE_ARCH = "nios2"
 TUNE_PKGARCH = "${DEFAULTTUNE}"
 
+# Nios2 R2
+TUNEVALID[r2] = "Nios2 R2 support"
+TUNECONFLICTS[r2] = "bigendian"
+TUNE_CCARGS .= "${@bb.utils.contains("TUNE_FEATURES", "r2", " -march=r2", " -march=r1", d)}"
+
 # Endianess
 TUNEVALID[bigendian] = "Enable big-endian mode"
+TUNECONFLICTS[bigendian] = "r2"
 TUNE_CCARGS .= "${@bb.utils.contains("TUNE_FEATURES", "bigendian", " -meb", " -mel", d)}"
 
 # Multiply opcodes
@@ -43,7 +49,7 @@ TUNECONFLICTS[fpu-custom] = "fpu-soft fpu-customdiv"
 TUNECONFLICTS[fpu-customdiv] = "fpu-soft fpu-custom"
 
 # Architecture configuration
-AVAILTUNES += "nios2 nios2eb"
+AVAILTUNES += "nios2 nios2eb nios2r2"
 
 TUNEVALID[nios2] = "Nios2 R1 Little-Endian"
 TUNE_FEATURES_tune-nios2 = "nios2"
@@ -52,3 +58,7 @@ PACKAGE_EXTRA_ARCHS_tune-nios2 = "${TUNE_PKGARCH}"
 TUNEVALID[nios2eb] = "Nios2 R1 Big-Endian"
 TUNE_FEATURES_tune-nios2eb = "bigendian"
 PACKAGE_EXTRA_ARCHS_tune-nios2eb = "${TUNE_PKGARCH}"
+
+TUNEVALID[nios2r2] = "Nios2 R2"
+TUNE_FEATURES_tune-nios2r2 = "r2"
+PACKAGE_EXTRA_ARCHS_tune-nios2r2 = "${TUNE_PKGARCH}"
