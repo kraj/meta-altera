@@ -54,6 +54,12 @@ TUNECONFLICTS[bmx] = "nios2 bigendian"
 TUNE_CCARGS .= "${@bb.utils.contains("TUNE_FEATURES", "bmx", " -mbmx", "" ,d)}"
 TUNE_PKGARCH .= "${@bb.utils.contains("TUNE_FEATURES", "bmx", "-bmx", "" ,d)}"
 
+# Nios2 R2 CDX opcodes
+TUNEVALID[cdx] = "Enable Nios2 R2 Code Density Extension."
+TUNECONFLICTS[cdx] = "nios2 bigendian"
+TUNE_CCARGS .= "${@bb.utils.contains("TUNE_FEATURES", "cdx", " -mcdx", "" ,d)}"
+TUNE_PKGARCH .= "${@bb.utils.contains("TUNE_FEATURES", "cdx", "-cdx", "" ,d)}"
+
 # Architecture configuration
 AVAILTUNES += "nios2 nios2eb nios2r2"
 
