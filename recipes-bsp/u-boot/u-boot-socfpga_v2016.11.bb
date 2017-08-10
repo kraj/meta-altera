@@ -16,5 +16,5 @@ SRC_URI_append = "\
 	file://cyclone5-socdk.env \
 	"
 
-DEPENDS += "dtc-native"
+DEPENDS += "dtc-native bc-native"
 DEPENDS += "u-boot-mkimage-native"
