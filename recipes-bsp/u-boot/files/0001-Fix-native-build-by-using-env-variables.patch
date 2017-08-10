@@ -1,0 +1,31 @@
+From 5aa1e2d99a26f1cab1774fa1e94b53de42897d1c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Jan-Simon=20M=C3=B6ller?= <jsmoeller@linuxfoundation.org>
+Date: Thu, 10 Aug 2017 19:36:21 +0200
+Subject: [PATCH] Fix native build by using env variables
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Jan-Simon Möller <jsmoeller@linuxfoundation.org>
+---
+ Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 8ca1db5..fef1059 100644
+--- a/Makefile
++++ b/Makefile
+@@ -254,8 +254,8 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
+ 	  else if [ -x /bin/bash ]; then echo /bin/bash; \
+ 	  else echo sh; fi ; fi)
+ 
+-HOSTCC       = cc
+-HOSTCXX      = c++
++HOSTCC       = $(CC)
++HOSTCXX      = $(CXX)
+ HOSTCFLAGS   = -Wall -Wstrict-prototypes -O2 -fomit-frame-pointer \
+ 		$(if $(CONFIG_TOOLS_DEBUG),-g)
+ HOSTCXXFLAGS = -O2
+-- 
+2.1.4
+
