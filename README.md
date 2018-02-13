@@ -52,4 +52,4 @@ Send pull requests, patches, comments or questions to yvanderv@opensource.altera
 and raj.khem@gmail.com
 
 Maintainers: Khem Raj <raj.khem@gmail.com>
-             Yves Vandervennet <yvanderv@opensource.altera.com>
+             Yves Vandervennet <yves.vandervennet@intel.com>
