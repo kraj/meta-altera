@@ -32,5 +32,23 @@ UBOOT_SUFFIX = "img"
 SPL_BINARY_cyclone5 = "u-boot-with-spl.sfp"
 SPL_BINARY_arria5 = "u-boot-with-spl.sfp"
 
+# Set extlinux.conf up
+UBOOT_EXTLINUX ??= "0"
+UBOOT_EXTLINUX_ROOT ?= "root=/dev/mmcblk0p2"
+UBOOT_EXTLINUX_LABELS ?= "default"
+# UBOOT_EXTLINUX_CONSOLE ?= "ttyS0,115200"
+UBOOT_EXTLINUX_MENU_DESCRIPTION_default ?= "Linux Default"
+UBOOT_EXTLINUX_KERNEL_IMAGE_default ?= "../${KERNEL_IMAGETYPE}"
+UBOOT_EXTLINUX_FDTDIR_default ??= "../"
+UBOOT_EXTLINUX_KERNEL_ARGS_default ??= "rootwait"
+
+# Add default variables for wic creation of sdcard image
+IMAGE_BOOT_FILES ?= " \
+	${KERNEL_DEVICETREE} \
+	${KERNEL_IMAGETYPE} \
+	"
+
+WKS_FILE ?= "sdimage-cyclone5-arria5.wks"
+do_image_wic[depends] += "mtools-native:do_populate_sysroot dosfstools-native:do_populate_sysroot virtual/bootloader:do_deploy virtual/kernel:do_deploy"
 
 
