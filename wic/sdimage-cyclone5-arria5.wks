@@ -1,0 +1,8 @@
+# short-description: Create an SD card image for the Cyclone 5 and Arria 5 SoCs
+# long-description: Create an SD card image for the Cyclone 5 and Arria 5 SoCs.
+# Boot files are located in the first vfat partition and u-Boot is located in
+# the third partition.
+
+part /boot --source bootimg-partition --ondisk mmcblk --fstype=vfat --label boot --active --align 4 --size 16
+part / --source rootfs --ondisk mmcblk --fstype=ext4 --label root --align 4
+part /a2 --source rawcopy --sourceparams="file=u-boot-with-spl.sfp" --ondisk mmcblk --system-id=a2 --align 4 --fixed-size 1M
