@@ -41,13 +41,13 @@ SDIMG_ROOTFS_TYPE = "ext3"
 SDIMG_ROOTFS = "${IMGDEPLOYDIR}/${IMAGE_NAME}.rootfs.${SDIMG_ROOTFS_TYPE}"
 
 
-IMAGE_DEPENDS_socfpga-sdimg += " \
-			parted-native \
-			mtools-native \
-			dosfstools-native \
-			virtual/kernel \
-			virtual/bootloader \
-			"
+do_image_socfpga-sdimg[depends] += " \
+                       parted-native:do_populate_sysroot \
+                       mtools-native:do_populate_sysroot \
+                       dosfstools-native:do_populate_sysroot \
+                       virtual/kernel:do_deploy \
+                       virtual/bootloader:do_deploy \
+                       "
 			
 rootfs[depends] += "virtual/kernel:do_deploy"
 
