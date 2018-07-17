@@ -2,6 +2,8 @@ LINUX_VERSION = "4.16"
 
 SRCREV = "0fbcbded57c6ad7f4e83c7023e64825670223d3f"
 
+KBUILD_DEFCONFIG_stratix10 := "s10_devkit_defconfig"
+
 include linux-altera.inc
 
 KERNEL_DEVICETREE_arria10_append ?= " socfpga_arria10_socdk_nand.dtb"
