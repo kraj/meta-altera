@@ -34,7 +34,7 @@ SPL_BINARY_arria5 = "u-boot-with-spl.sfp"
 
 # Set extlinux.conf up
 UBOOT_EXTLINUX ??= "0"
-UBOOT_EXTLINUX_ROOT ?= "root=/dev/mmcblk0p2"
+UBOOT_EXTLINUX_ROOT ?= "root=/dev/mmcblk0p3"
 UBOOT_EXTLINUX_LABELS ?= "default"
 UBOOT_EXTLINUX_CONSOLE ?= "earlycon"
 UBOOT_EXTLINUX_MENU_DESCRIPTION_default ?= "Linux Default"
