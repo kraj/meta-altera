@@ -4,6 +4,9 @@ require ${COREBASE}/meta/recipes-bsp/u-boot/u-boot.inc
 
 FILESEXTRAPATHS =. "${THISDIR}/files/v2017.07:"
 
+LICENSE = "GPLv2+"
+LIC_FILES_CHKSUM = "file://Licenses/README;md5=a2c678cfd4a4d97135585cad908541c6"
+
 # This revision corresponds to the tag "v2017.07"
 # We use the revision in order to avoid having to fetch it from the
 # repo during parse 
