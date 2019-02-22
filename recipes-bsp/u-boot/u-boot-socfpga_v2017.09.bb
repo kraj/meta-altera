@@ -3,6 +3,9 @@ require ${COREBASE}/meta/recipes-bsp/u-boot/u-boot.inc
 
 FILESEXTRAPATHS =. "${THISDIR}/files/v2017.09:"
 
+LICENSE = "GPLv2+"
+LIC_FILES_CHKSUM = "file://Licenses/README;md5=a2c678cfd4a4d97135585cad908541c6"
+
 SRCREV = "c98ac3487e413c71e5d36322ef3324b21c6f60f9"
 
 # Stratix10 is not mainlined yet
