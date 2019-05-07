@@ -1,6 +1,6 @@
 LINUX_VERSION = "4.19"
 
-SRCREV = "8a300a24b078ad202ed342ac8b482d40cbab2dec"
+SRCREV = "e3b47dd63c0f7f7404bb6a368c1d671e0d199745"
 
 include linux-altera.inc
 
