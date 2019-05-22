@@ -1,0 +1,8 @@
+# short-description: Create an SD card image for the Arria 10 SoC.
+# long-description: Create an SD card image for the Arria 10 SoC.
+# Boot files are located in the first vfat partition and u-Boot is located in
+# the third partition.
+
+part --source bootimg-partition --ondisk mmcblk --fstype=vfat --label boot --active --align 4 --size 50M
+part --source rawcopy --sourceparams="file=u-boot-with-spl.sfp" --ondisk mmcblk --system-id=a2 --align 4 --fixed-size 10M
+part / --source rootfs --ondisk mmcblk --fstype=ext4 --label root --align 4
