@@ -16,8 +16,6 @@ MACHINE_KERNEL_PR = "r1"
 UBOOT_ENTRYPOINT = "0x80008000"
 UBOOT_LOADADDRESS = "0x80008000"
 
-SERIAL_CONSOLE = "115200 ttyS0"
-
 KERNEL_IMAGETYPE ?= "zImage"
 MACHINE_EXTRA_RRECOMMENDS = " kernel-modules"
 MACHINE_FEATURES = "kernel26"
@@ -26,29 +24,9 @@ MACHINE_FEATURES = "kernel26"
 IMAGE_FSTYPES ?= "cpio ext3 tar.gz"
 
 # u-boot setup
-UBOOT_SUFFIX = "img"
+UBOOT_SUFFIX ?= "sfp"
+UBOOT_BINARY ?= "u-boot-with-spl.${UBOOT_SUFFIX}"
 
-# AV and CV uBoot + SPL mkpimage type binary
-SPL_BINARY_cyclone5 = "u-boot-with-spl.sfp"
-SPL_BINARY_arria5 = "u-boot-with-spl.sfp"
-
-# Set extlinux.conf up
-UBOOT_EXTLINUX ??= "0"
-UBOOT_EXTLINUX_ROOT ?= "root=/dev/mmcblk0p3"
-UBOOT_EXTLINUX_LABELS ?= "default"
-UBOOT_EXTLINUX_CONSOLE ?= "earlycon"
-UBOOT_EXTLINUX_MENU_DESCRIPTION_default ?= "Linux Default"
-UBOOT_EXTLINUX_KERNEL_IMAGE_default ?= "../${KERNEL_IMAGETYPE}"
-UBOOT_EXTLINUX_FDTDIR_default ??= "../"
-UBOOT_EXTLINUX_KERNEL_ARGS_default ??= "rootwait rw"
-
-# Add default variables for wic creation of sdcard image
-IMAGE_BOOT_FILES ?= " \
-	${KERNEL_DEVICETREE} \
-	${KERNEL_IMAGETYPE} \
-	"
-
-WKS_FILE ?= "sdimage-cyclone5-arria5.wks"
 do_image_wic[depends] += "mtools-native:do_populate_sysroot dosfstools-native:do_populate_sysroot virtual/bootloader:do_deploy virtual/kernel:do_deploy"
 
 
