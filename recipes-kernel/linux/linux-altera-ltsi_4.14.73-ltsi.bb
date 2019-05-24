@@ -1,7 +1,7 @@
 LINUX_VERSION = "4.14.73"
 LINUX_VERSION_SUFFIX = "-ltsi"
 
-SRCREV = "0d1cf8883fc9177ed74d576dbf18e32e49b2942d"
+SRCREV = "b5ef09869b73b46068b53b1bf72de2ffd4d1cd94"
 
 include linux-altera.inc
 
