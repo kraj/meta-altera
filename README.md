@@ -48,8 +48,6 @@ For Angstrom:
 
 
 
-Send pull requests, patches, comments or questions to yvanderv@opensource.altera.com
-and raj.khem@gmail.com
+Send pull requests, patches, comments or questions to raj.khem@gmail.com
 
-Maintainers: Khem Raj <raj.khem@gmail.com>
-             Yves Vandervennet <yves.vandervennet@intel.com>
+Maintainer(s): Khem Raj <raj.khem@gmail.com>
