@@ -1,0 +1,38 @@
+From 58b4cc1a3d1e4a989b65892b97af119c25d9a511 Mon Sep 17 00:00:00 2001
+From: Dalon Westergreen <dalon.westergreen@intel.com>
+Date: Tue, 16 Jul 2019 09:12:53 -0700
+Subject: [PATCH] fpga: arria10: Fix error in fpga pin configuration
+
+Pin configuration of the FPGA devicetree block should be done
+after core configuration in the arria10 fpga driver.  This fix
+corrects the check of status, and ensures that the fpga pin mux
+is configured on correct configuration of the core fpga image.
+
+Signed-off-by: Dalon Westergreen <dalon.westergreen@intel.com>
+---
+ drivers/fpga/socfpga_arria10.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/fpga/socfpga_arria10.c b/drivers/fpga/socfpga_arria10.c
+index 285280e507..5fb9d6a191 100644
+--- a/drivers/fpga/socfpga_arria10.c
++++ b/drivers/fpga/socfpga_arria10.c
+@@ -936,10 +936,11 @@ int socfpga_load(Altera_desc *desc, const void *rbf_data, size_t rbf_size)
+ 	fpgamgr_program_write(rbf_data, rbf_size);
+ 
+ 	status = fpgamgr_program_finish();
+-	if (status) {
+-		config_pins(gd->fdt_blob, "fpga");
+-		puts("FPGA: Enter user mode.\n");
+-	}
++	if (status)
++		return status;
++
++	config_pins(gd->fdt_blob, "fpga");
++	puts("FPGA: Enter user mode.\n");
+ 
+ 	return status;
+ }
+-- 
+2.21.0
+

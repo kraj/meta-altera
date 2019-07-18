@@ -8,7 +8,7 @@ PR = "2"
 
 FILESEXTRAPATHS =. "${THISDIR}/files/v2019.07:"
 
-SRCREV = "7e090b466c5ba874d31c1bf22c3a130d516cdc32"
+SRCREV = "e5aee22e4be75e75a854ab64503fc80598bc2004"
 
 SRC_URI_append = "\
 	file://0001-ARM-socfpga-stratix10-Enable-PSCI-system-reset.patch \
@@ -24,6 +24,7 @@ SRC_URI_append = "\
 	file://0011-ARM-socfpga-stratix10-Remove-CONFIG_OF_EMBED.patch \
 	file://0012-ARM-socfpga-stratix10-Temporarily-revert-to-2GB-DRAM.patch \
 	file://0001-ARM-socfpga-Stratix10-Disable-CONFIG_PSCI_RESET.patch \
+	file://0001-fpga-arria10-Fix-error-in-fpga-pin-configuration.patch \
     "
 
 DEPENDS += "dtc-native bc-native bison-native u-boot-mkimage-native"
