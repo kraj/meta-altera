@@ -21,7 +21,7 @@ MACHINE_EXTRA_RRECOMMENDS = " kernel-modules"
 MACHINE_FEATURES = "kernel26"
 
 # file system images required
-IMAGE_FSTYPES ?= "cpio ext3 tar.gz"
+IMAGE_FSTYPES ?= "cpio ext3 tar.gz jffs2"
 
 # u-boot setup
 UBOOT_SUFFIX ?= "sfp"
