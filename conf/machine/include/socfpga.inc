@@ -9,6 +9,7 @@ KERNEL_PROVIDER ?= "linux-altera"
 PREFERRED_PROVIDER_virtual/kernel ?= "${KERNEL_PROVIDER}"
 
 PREFERRED_PROVIDER_virtual/bootloader ?= "u-boot-socfpga"
+PREFERRED_PROVIDER_u-boot ?= "u-boot-socfpga"
 
 # Increase this everytime you change something in the kernel
 MACHINE_KERNEL_PR = "r1"
