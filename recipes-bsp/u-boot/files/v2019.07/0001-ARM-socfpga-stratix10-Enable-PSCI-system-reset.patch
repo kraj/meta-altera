@@ -1,7 +1,7 @@
-From 97f599b2a7b34d17067b4ccf6c468cdcc6805349 Mon Sep 17 00:00:00 2001
+From 5534368e77a2bfcb366eb158c72a751c28e377a7 Mon Sep 17 00:00:00 2001
 From: "Ang, Chee Hong" <chee.hong.ang@intel.com>
 Date: Mon, 29 Apr 2019 23:35:30 -0700
-Subject: [PATCH 01/12] ARM: socfpga: stratix10: Enable PSCI system reset
+Subject: [PATCH 01/14] ARM: socfpga: stratix10: Enable PSCI system reset
 
 Enable psci_system_reset support for Stratix10. This PSCI function
 will eventually trigger the mailbox HPS_REBOOT to SDM.

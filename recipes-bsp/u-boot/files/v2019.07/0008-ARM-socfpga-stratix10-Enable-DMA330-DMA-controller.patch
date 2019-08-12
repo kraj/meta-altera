@@ -1,7 +1,7 @@
-From da0bd33c8c8f6a1b77ecaa4c676f8ee14997b9e9 Mon Sep 17 00:00:00 2001
+From f4e6b02369f2a7daed5799f27e29198714bda848 Mon Sep 17 00:00:00 2001
 From: "Ang, Chee Hong" <chee.hong.ang@intel.com>
 Date: Wed, 30 Jan 2019 21:29:09 -0800
-Subject: [PATCH 08/12] ARM: socfpga: stratix10: Enable DMA330 DMA controller
+Subject: [PATCH 08/14] ARM: socfpga: stratix10: Enable DMA330 DMA controller
 
 Signed-off-by: Ang, Chee Hong <chee.hong.ang@intel.com>
 ---

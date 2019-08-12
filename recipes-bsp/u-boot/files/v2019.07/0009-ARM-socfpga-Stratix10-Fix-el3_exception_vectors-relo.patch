@@ -1,7 +1,7 @@
-From 8569e08a1a4b3bd810f60083058053a39b27534e Mon Sep 17 00:00:00 2001
+From b4807003314579b069877df69eefbace4c7b6efa Mon Sep 17 00:00:00 2001
 From: Chee Hong Ang <chee.hong.ang@intel.com>
 Date: Sat, 18 May 2019 16:42:10 +0800
-Subject: [PATCH 09/12] ARM: socfpga: Stratix10: Fix el3_exception_vectors
+Subject: [PATCH 09/14] ARM: socfpga: Stratix10: Fix el3_exception_vectors
  relocation issue
 
 New toolchain has issue relocating the 32-bit pointer to address of

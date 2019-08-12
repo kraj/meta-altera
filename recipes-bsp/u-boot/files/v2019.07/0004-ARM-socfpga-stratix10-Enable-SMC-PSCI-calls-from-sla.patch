@@ -1,7 +1,7 @@
-From a859bc214aa913be022a7aa8f03723079a325b07 Mon Sep 17 00:00:00 2001
+From d6ac4f9f2756a14021f9cdc3c3305f950643d45f Mon Sep 17 00:00:00 2001
 From: Chee Hong Ang <chee.hong.ang@intel.com>
 Date: Fri, 20 Apr 2018 18:28:07 +0800
-Subject: [PATCH 04/12] ARM: socfpga: stratix10: Enable SMC/PSCI calls from
+Subject: [PATCH 04/14] ARM: socfpga: stratix10: Enable SMC/PSCI calls from
  slave CPUs
 
 Before this patch, only master CPU (CPU0) is able to

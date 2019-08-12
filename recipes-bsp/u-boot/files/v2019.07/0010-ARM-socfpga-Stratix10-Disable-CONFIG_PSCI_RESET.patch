@@ -1,7 +1,7 @@
-From 45dd1ac82881153c73bd4243cd20f3b13955ad21 Mon Sep 17 00:00:00 2001
+From 31bb5e5583e87e5bc6d7daa3647891374eec708b Mon Sep 17 00:00:00 2001
 From: Chee Hong Ang <chee.hong.ang@intel.com>
 Date: Sat, 11 May 2019 00:09:46 +0800
-Subject: [PATCH] ARM: socfpga: Stratix10: Disable CONFIG_PSCI_RESET
+Subject: [PATCH 10/14] ARM: socfpga: Stratix10: Disable CONFIG_PSCI_RESET
 
 Avoid invoking 'SYSTEM_RESET' PSCI function because PSCI
 function calls are not supported in u-boot running in EL3.
@@ -12,11 +12,11 @@ Signed-off-by: Chee Hong Ang <chee.hong.ang@intel.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm/cpu/armv8/Kconfig b/arch/arm/cpu/armv8/Kconfig
-index 7405c3a4a1..409ee7ada0 100644
+index 92a2b58ed4..f3683bccb4 100644
 --- a/arch/arm/cpu/armv8/Kconfig
 +++ b/arch/arm/cpu/armv8/Kconfig
-@@ -108,7 +108,8 @@ config PSCI_RESET
- 		   !TARGET_LS1046ARDB && !TARGET_LS1046AQDS && \
+@@ -110,7 +110,8 @@ config PSCI_RESET
+ 		   !TARGET_LS1046AFRWY && \
  		   !TARGET_LS2081ARDB && !TARGET_LX2160ARDB && \
  		   !TARGET_LX2160AQDS && \
 -		   !ARCH_UNIPHIER && !TARGET_S32V234EVB
@@ -26,5 +26,5 @@ index 7405c3a4a1..409ee7ada0 100644
  	  Most armv8 systems have PSCI support enabled in EL3, either through
  	  ARM Trusted Firmware or other firmware.
 -- 
-2.13.0
+2.21.0
 

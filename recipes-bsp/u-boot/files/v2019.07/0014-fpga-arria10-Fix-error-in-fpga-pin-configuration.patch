@@ -1,7 +1,7 @@
-From 58b4cc1a3d1e4a989b65892b97af119c25d9a511 Mon Sep 17 00:00:00 2001
+From db2095305c0fb464f57b001464fb811a86f19834 Mon Sep 17 00:00:00 2001
 From: Dalon Westergreen <dalon.westergreen@intel.com>
 Date: Tue, 16 Jul 2019 09:12:53 -0700
-Subject: [PATCH] fpga: arria10: Fix error in fpga pin configuration
+Subject: [PATCH 14/14] fpga: arria10: Fix error in fpga pin configuration
 
 Pin configuration of the FPGA devicetree block should be done
 after core configuration in the arria10 fpga driver.  This fix

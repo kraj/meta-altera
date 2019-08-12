@@ -1,7 +1,7 @@
-From 17366d3b46cf70a8fa4d807519790ef4b1b03772 Mon Sep 17 00:00:00 2001
+From 5dd98b8e0aec2059863ae73d5c83fa043b0a6170 Mon Sep 17 00:00:00 2001
 From: "Ang, Chee Hong" <chee.hong.ang@intel.com>
 Date: Wed, 30 Jan 2019 21:47:36 -0800
-Subject: [PATCH 07/12] mmc: dwmmc: Enable small delay before returning error
+Subject: [PATCH 07/14] mmc: dwmmc: Enable small delay before returning error
 
 'SET_BLOCKLEN' may occasionally fail on first attempt.
 This patch enable a small delay in dwmci_send_cmd() on
