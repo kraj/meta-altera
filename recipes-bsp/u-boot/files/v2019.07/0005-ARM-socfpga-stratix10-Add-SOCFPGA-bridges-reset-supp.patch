@@ -1,7 +1,7 @@
-From 16460c05fe576050cf485282151fd5623d6e862a Mon Sep 17 00:00:00 2001
+From 97cae73c90b57bbcf2b422ff142a3c9de6e9ea66 Mon Sep 17 00:00:00 2001
 From: Dalon Westergreen <dalon.westergreen@intel.com>
 Date: Wed, 22 May 2019 17:05:12 -0700
-Subject: [PATCH 05/12] ARM: socfpga: stratix10: Add SOCFPGA bridges reset
+Subject: [PATCH 05/14] ARM: socfpga: stratix10: Add SOCFPGA bridges reset
  support for PSCI call
 
 Add SOCFPGA bridges reset support for FPGA configuration SMC services

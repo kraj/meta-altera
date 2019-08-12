@@ -1,0 +1,87 @@
+From 56332c75a69a9f9ef7928e0f43d1fc509db9c866 Mon Sep 17 00:00:00 2001
+From: Dalon Westergreen <dalon.westergreen@intel.com>
+Date: Wed, 20 Mar 2019 11:21:20 -0700
+Subject: [PATCH 11/14] Makefile: Add target to generate hex output for
+ combined spl and dtb
+
+Stratix10 requires a hex image of the spl plus spl devicetree offset to
+the Stratix10 onchip memory located at SPL_TEXT_BASE.  This patch adds
+a target to generate a hex file from the u-boot-spl binary including the
+dtb offset at SPL_TEST_BASE.
+
+Objcopy is used to convert the $(SPL_BIN).bin, which includes the spl
+dtb, to a hex file.  the --change-address option is used to offset the
+hex to SPL_TEXT_BASE as objcopy on the spl binary will not result in
+a hex file appropriately offset at SPL_TEXT_BASE.
+
+Signed-off-by: Dalon Westergreen <dalon.westergreen@intel.com>
+
+---
+Changes in v3:
+ -> Cleanup commit message and better describe the problem being
+    resolved
+ -> Remove extraneous hunk
+ -> use SPL_BIN instead of u-boot-spl
+Changes in v2:
+ -> Move spl hex file generation to SPL Makefile
+ -> Create hexfile from $(SPL_BIN).bin which will include the dtb
+    ifneq(build_dtb,)
+---
+ Makefile             | 8 +++-----
+ scripts/Makefile.spl | 7 +++++++
+ 2 files changed, 10 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 516260f46d..8236f095fc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1136,11 +1136,6 @@ OBJCOPYFLAGS_u-boot-nodtb.bin := -O binary \
+ 		$(if $(CONFIG_X86_16BIT_INIT),-R .start16 -R .resetvec) \
+ 		$(if $(CONFIG_MPC85XX_HAVE_RESET_VECTOR),-R .bootpg -R .resetvec)
+ 
+-OBJCOPYFLAGS_u-boot-spl.hex = $(OBJCOPYFLAGS_u-boot.hex)
+-
+-spl/u-boot-spl.hex: spl/u-boot-spl FORCE
+-	$(call if_changed,objcopy)
+-
+ binary_size_check: u-boot-nodtb.bin FORCE
+ 	@file_size=$(shell wc -c u-boot-nodtb.bin | awk '{print $$1}') ; \
+ 	map_size=$(shell cat u-boot.map | \
+@@ -1721,6 +1716,9 @@ spl/u-boot-spl.bin: spl/u-boot-spl
+ 	@:
+ 	$(SPL_SIZE_CHECK)
+ 
++spl/u-boot-spl.hex: spl/u-boot-spl
++	@:
++
+ spl/u-boot-spl: tools prepare \
+ 		$(if $(CONFIG_OF_SEPARATE)$(CONFIG_OF_EMBED)$(CONFIG_SPL_OF_PLATDATA),dts/dt.dtb) \
+ 		$(if $(CONFIG_OF_SEPARATE)$(CONFIG_OF_EMBED)$(CONFIG_TPL_OF_PLATDATA),dts/dt.dtb)
+diff --git a/scripts/Makefile.spl b/scripts/Makefile.spl
+index 7af6b120b6..551002194e 100644
+--- a/scripts/Makefile.spl
++++ b/scripts/Makefile.spl
+@@ -216,6 +216,8 @@ ifneq ($(CONFIG_TARGET_SOCFPGA_GEN5)$(CONFIG_TARGET_SOCFPGA_ARRIA10),)
+ ALL-y	+= $(obj)/$(SPL_BIN).sfp
+ endif
+ 
++ALL-$(CONFIG_TARGET_SOCFPGA_STRATIX10) += $(obj)/$(SPL_BIN).hex
++
+ ifdef CONFIG_ARCH_SUNXI
+ ALL-y	+= $(obj)/sunxi-spl.bin
+ 
+@@ -363,6 +365,11 @@ endif
+ $(obj)/$(SPL_BIN).sfp: $(obj)/$(SPL_BIN).bin FORCE
+ 	$(call if_changed,mkimage)
+ 
++OBJCOPYFLAGS_$(SPL_BIN).hex := -I binary -O ihex --change-address=$(CONFIG_SPL_TEXT_BASE)
++
++$(obj)/$(SPL_BIN).hex: $(obj)/$(SPL_BIN).bin FORCE
++	$(call if_changed,objcopy)
++
+ quiet_cmd_mksunxiboot = MKSUNXI $@
+ cmd_mksunxiboot = $(objtree)/tools/mksunxiboot \
+ 			--default-dt $(CONFIG_DEFAULT_DEVICE_TREE) $< $@
+-- 
+2.21.0
+

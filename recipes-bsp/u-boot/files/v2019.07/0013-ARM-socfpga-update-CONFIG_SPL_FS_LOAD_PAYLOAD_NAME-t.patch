@@ -1,0 +1,30 @@
+From 441ba6f4d508bf77cc543feb00d1d3fca9a80934 Mon Sep 17 00:00:00 2001
+From: Dalon Westergreen <dalon.westergreen@intel.com>
+Date: Tue, 4 Jun 2019 13:43:59 -0700
+Subject: [PATCH 13/14] ARM: socfpga: update CONFIG_SPL_FS_LOAD_PAYLOAD_NAME to
+ u-boot.img
+
+Bring cyclone5 / arria5 / arria10 in line with convention and use
+u-boot.img as CONFIG_SPL_FS_LOAD_PAYLOAD_NAME.
+
+Signed-off-by: Dalon Westergreen <dalon.westergreen@intel.com>
+---
+ include/configs/socfpga_common.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/configs/socfpga_common.h b/include/configs/socfpga_common.h
+index d1034ac280..36b0ed5459 100644
+--- a/include/configs/socfpga_common.h
++++ b/include/configs/socfpga_common.h
+@@ -203,7 +203,7 @@ unsigned int cm_get_qspi_controller_clk_hz(void);
+ /* SPL SDMMC boot support */
+ #ifdef CONFIG_SPL_MMC_SUPPORT
+ #if defined(CONFIG_SPL_FS_FAT) || defined(CONFIG_SPL_FS_EXT4)
+-#define CONFIG_SPL_FS_LOAD_PAYLOAD_NAME		"u-boot-dtb.img"
++#define CONFIG_SPL_FS_LOAD_PAYLOAD_NAME		"u-boot.img"
+ #define CONFIG_SYS_MMCSD_FS_BOOT_PARTITION	1
+ #endif
+ #else
+-- 
+2.21.0
+

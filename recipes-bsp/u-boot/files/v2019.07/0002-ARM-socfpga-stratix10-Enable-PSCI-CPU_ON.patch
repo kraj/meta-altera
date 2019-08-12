@@ -1,7 +1,7 @@
-From 257cff780ec1a50600a77cf361df27746801d684 Mon Sep 17 00:00:00 2001
+From 0d6fb850e5662ade636b0c7aa96de9d6ed653310 Mon Sep 17 00:00:00 2001
 From: "Ang, Chee Hong" <chee.hong.ang@intel.com>
 Date: Mon, 14 Jan 2019 01:07:50 -0800
-Subject: [PATCH 02/12] ARM: socfpga: stratix10: Enable PSCI CPU_ON
+Subject: [PATCH 02/14] ARM: socfpga: stratix10: Enable PSCI CPU_ON
 
 Enable psci_cpu_on support for Stratix10. This PSCI function
 will pass the cpu release address for CPU1-CPU3. Then send event

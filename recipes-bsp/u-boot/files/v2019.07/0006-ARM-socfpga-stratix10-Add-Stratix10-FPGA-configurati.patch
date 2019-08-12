@@ -1,7 +1,7 @@
-From 04187fba93e6d359ebb4dd8e397dff282f53ec5a Mon Sep 17 00:00:00 2001
+From 97b805b19ed529f389bf5899fbe1d99bd13ffd59 Mon Sep 17 00:00:00 2001
 From: "Ang, Chee Hong" <chee.hong.ang@intel.com>
 Date: Mon, 29 Apr 2019 23:42:39 -0700
-Subject: [PATCH 06/12] ARM: socfpga: stratix10: Add Stratix10 FPGA
+Subject: [PATCH 06/14] ARM: socfpga: stratix10: Add Stratix10 FPGA
  configuration PSCI services
 
 Allow PSCI layer to handle the S10 FPGA configuration (SiP) service
