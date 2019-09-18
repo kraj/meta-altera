@@ -8,7 +8,7 @@ MACHINE_EXTRA_RRECOMMENDS += "kernel-modules"
 PREFERRED_PROVIDER_virtual/bootloader ?= "u-boot-socfpga"
 PREFERRED_PROVIDER_u-boot ?= "u-boot-socfpga"
 
-SPL_BINARY = "spl/u-boot-spl.hex"
+SPL_BINARY = "spl/u-boot-spl-dtb.hex"
 UBOOT_SUFFIX = "img"
 UBOOT_BINARY = "u-boot.img"
 UBOOT_IMAGE = "u-boot-${MACHINE}-${PV}-${PR}.${UBOOT_SUFFIX}"
