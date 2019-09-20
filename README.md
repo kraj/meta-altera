@@ -4,6 +4,9 @@ This layer works with poky and Angstrom
 
 Please follow the recommended setup procedures of your OE distribution.
 
+Supported branches
+==================
+Only branches listed appropriately in https://wiki.yoctoproject.org/wiki/Stable_branch_maintenance are maintained.
 
 Choosing Kernel Versions
 ==========================
