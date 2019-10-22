@@ -5,6 +5,8 @@ PREFERRED_PROVIDER_virtual/kernel ?= "${KERNEL_PROVIDER}"
 KERNEL_IMAGETYPE = "Image"
 MACHINE_EXTRA_RRECOMMENDS += "kernel-modules"
 
+KBUILD_DEFCONFIG ?= "defconfig"
+
 PREFERRED_PROVIDER_virtual/bootloader ?= "u-boot-socfpga"
 PREFERRED_PROVIDER_u-boot ?= "u-boot-socfpga"
 
