@@ -4,6 +4,15 @@ This layer works with poky and Angstrom
 
 Please follow the recommended setup procedures of your OE distribution.
 
+Supported u-boot and linux kernels
+===
+It is important to understand the support and release of u-boot-socfpga
+and linux-socfpga in the github.com/altera-opensource repositories.  Only
+currently supported and maintained releases/branches are available in the
+repository. As such, supported kernel and u-boot releases are updated regularly
+in currently supported meta-altera branches.  Kernel and u-boot releases
+which are no longer supported are removed.
+
 Supported branches
 ==================
 Only branches listed appropriately in https://wiki.yoctoproject.org/wiki/Stable_branch_maintenance are maintained.
