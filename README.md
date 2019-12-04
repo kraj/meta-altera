@@ -1,9 +1,14 @@
+# This branch is no longer supported or maintained
+
 The official OpenEmbedded/Yocto BSP layer for Altera SoCFPGA platforms 
 
 This layer works with poky and Angstrom
 
 Please follow the recommended setup procedures of your OE distribution.
 
+Supported branches
+==================
+Only branches listed appropriately in https://wiki.yoctoproject.org/wiki/Stable_branch_maintenance are maintained.
 
 Choosing Kernel Versions
 ==========================
@@ -48,8 +53,6 @@ For Angstrom:
 
 
 
-Send pull requests, patches, comments or questions to yvanderv@opensource.altera.com
-and raj.khem@gmail.com
+Send pull requests, patches, comments or questions to raj.khem@gmail.com
 
-Maintainers: Khem Raj <raj.khem@gmail.com>
-             Yves Vandervennet <yvanderv@opensource.altera.com>
+Maintainer(s): Khem Raj <raj.khem@gmail.com>
