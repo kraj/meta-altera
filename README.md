@@ -37,6 +37,21 @@ or for the linux-altera-ltsi kernel
 Please note that older kernels will not compile with GCC 5+ and you will need 
 to specify in your conf/local.conf to revert to older 4.9 toolchain. 
 
+Specifying Devicetrees and U-Boot Configurations
+==================================================
+All of the supported machines select default uboot configurations and devicetrees.  These
+selections can be overridden in the local.conf or by defining your own machine in your
+own layer.
+
+An example of the is the DE0-Nano-SoC board, which is a supported configuration in the Cyclone5
+machine definition.
+
+	UBOOT_CONFIG = "de0-nano-soc"
+	UBOOT_EXTLINUX_FDT_default = "../socfpga_cyclone5_de0_nano_soc.dtb"
+
+The above overrides the uboot configuration, "de0-nano-soc" is a target in u-boot, and configures
+distroboot to indicate the de0-nano-soc devicetree.  Please keep in mind that not all targets are
+using distroboot in u-boot and may require u-boot environment changes.
 
 Choosing Toolchain Versions
 =============================
