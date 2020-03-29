@@ -75,6 +75,6 @@ For Angstrom:
 
 
 
-Send pull requests, patches, comments or questions to raj.khem@gmail.com
+Submit patches via github pull requests, Use github issues to report problems or to send comments
 
 Maintainer(s): Khem Raj <raj.khem@gmail.com>
