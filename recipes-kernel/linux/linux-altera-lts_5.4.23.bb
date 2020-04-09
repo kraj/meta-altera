@@ -12,4 +12,5 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/config:"
 SRC_URI_append_cyclone5 = " file://lbdaf.scc "
 SRC_URI_append_arria5 = " file://lbdaf.scc "
 SRC_URI_append_arria10 = " file://lbdaf.scc "
-
+SRC_URI_append_stratix10 = " file://jffs2.scc "
+SRC_URI_append_agilex = " file://jffs2.scc "
