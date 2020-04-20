@@ -28,6 +28,15 @@ or for the linux-altera-ltsi kernel
 Please note that older kernels will not compile with GCC 5+ and you will need 
 to specify in your conf/local.conf to revert to older 4.9 toolchain. 
 
+Choosing Bootloader (U-Boot)
+=============================
+The default bootloader configuration is set to `cyclone5-socdk` (in case of a cyclone-V machine).
+Add the following to your conf/local.conf
+
+   UBOOT_CONFIG = "de0-nano-soc"
+
+to enable the de0-nano-soc u-boot configuration (in case of a cyclone-5 machine).
+
 
 Choosing Toolchain Versions
 =============================
