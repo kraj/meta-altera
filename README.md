@@ -20,7 +20,7 @@ Only branches listed appropriately in https://wiki.yoctoproject.org/wiki/Stable_
 Choosing Kernel Versions
 ==========================
 This layer has a few providers for the kernel.  These are the linux-altera, 
-linux-altera-ltsi, and linux-altera-ltsi-rt kernels.  There are also 
+linux-altera-lts, linux-altera-ltsi, and linux-altera-ltsi-rt kernels.  There are also
 linux-altera-dev and linux-altera-ltsi-dev kernels which follow the current 
 development versions of those kernels.
 
@@ -28,6 +28,11 @@ To specify a linux-altera kernel, add the following to your conf/local.conf
 
 	PREFERRED_PROVIDER_virtual/kernel = "linux-altera"
 	PREFERRED_VERSION_linux-altera = "4.3%"
+
+or for the linux-altera-lts kernel
+
+	PREFERRED_PROVIDER_virtual/kernel = "linux-altera-lts"
+	PREFERRED_VERSION_linux-altera = "5.4%"
 
 or for the linux-altera-ltsi kernel	
 
@@ -65,6 +70,7 @@ the use of this toolchain in Yocto add the following to conf/local.conf
 To use older kernels not supported by GCC 5+ you will need to use the 4.9 toolchain.
 
 For Yocto:
+
 	GCCVERSION = "linaro-4.9"
 	SDKGCCVERSION = "linaro-4.9"
 	DEFAULTTUNE = "cortexa9hf-neon"
