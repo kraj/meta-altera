@@ -11,9 +11,11 @@ inherit deploy
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-PROT ?= "https"
-BRANCH ?= "socfpga_v2.3"
-SRC_URI ?= "git://github.com/altera-opensource/arm-trusted-firmware.git;protocol=${PROT};branch=${BRANCH}"
+ATF_PROT ?= "https"
+ATF_BRANCH ?= "socfpga_v2.3"
+ATF_REPO ?= "git://github.com/altera-opensource/arm-trusted-firmware.git"
+
+SRC_URI = "${ATF_REPO};protocol=${ATF_PROT};branch=${ATF_BRANCH}"
 
 S = "${WORKDIR}/git"
 
