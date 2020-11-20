@@ -1,3 +1,3 @@
 require arm-trusted-firmware.inc
 
-SRCREV = "a124a308dc3125480ca9c746afb48007d9a7ffce"
+SRCREV = "7009a0d7a0a0c7c8fa5834958dfdd8ee60cbf21d"
