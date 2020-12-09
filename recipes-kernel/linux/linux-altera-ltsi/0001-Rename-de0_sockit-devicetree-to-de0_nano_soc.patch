@@ -1,0 +1,31 @@
+From 1ec97470546748c7b26326962c5d3d0e71fde5d5 Mon Sep 17 00:00:00 2001
+From: Alessio Igor Bogani <alessio.bogani@elettra.eu>
+Date: Wed, 9 Dec 2020 13:47:04 +0100
+Subject: [PATCH] Rename de0_sockit devicetree to de0_nano_soc
+
+---
+ arch/arm/boot/dts/Makefile                                      | 2 +-
+ ...yclone5_de0_sockit.dts => socfpga_cyclone5_de0_nano_soc.dts} | 0
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+ rename arch/arm/boot/dts/{socfpga_cyclone5_de0_sockit.dts => socfpga_cyclone5_de0_nano_soc.dts} (100%)
+
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index 0f84ce144456..36091af14337 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -793,7 +793,7 @@ dtb-$(CONFIG_ARCH_SOCFPGA) += \
+ 	socfpga_arria10_swvp.dtb \
+ 	socfpga_cyclone5_mcvevk.dtb \
+ 	socfpga_cyclone5_socdk.dtb \
+-	socfpga_cyclone5_de0_sockit.dtb \
++	socfpga_cyclone5_de0_nano_soc.dtb \
+ 	socfpga_cyclone5_sockit.dtb \
+ 	socfpga_cyclone5_socrates.dtb \
+ 	socfpga_cyclone5_sodia.dtb \
+diff --git a/arch/arm/boot/dts/socfpga_cyclone5_de0_sockit.dts b/arch/arm/boot/dts/socfpga_cyclone5_de0_nano_soc.dts
+similarity index 100%
+rename from arch/arm/boot/dts/socfpga_cyclone5_de0_sockit.dts
+rename to arch/arm/boot/dts/socfpga_cyclone5_de0_nano_soc.dts
+-- 
+2.17.1
+
