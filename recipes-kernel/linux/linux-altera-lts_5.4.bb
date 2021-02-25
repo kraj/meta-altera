@@ -3,7 +3,7 @@ LINUX_VERSION_SUFFIX = "-lts"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
 
-SRCREV = "1f2f1ded05f1c6a1349fd0ffb20042679cd50d5e"
+SRCREV = "d9c44bbfc78be31e2cc2931502965197914d826f"
 
 include linux-altera.inc
 
