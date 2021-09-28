@@ -16,7 +16,7 @@ UBOOT_VERSION ?= "v2019.10"
 UBOOT_BRANCH ?= "${UBOOT_VERSION_PREFIX}${UBOOT_VERSION}"
 
 SRCREV ?= "${AUTOREV}"
-PV_append = "+git${SRCPV}"
+PV:append = "+git${SRCPV}"
 
 S = "${WORKDIR}/git"
 B = "${WORKDIR}/build"

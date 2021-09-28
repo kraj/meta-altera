@@ -15,7 +15,7 @@ do_environment_mkimage() {
 	fi
 }
 
-do_deploy_append() {
+do_deploy:append() {
 
     if [ -e "${WORKDIR}/${ENV_BASE_NAME}.bin" ]; then
 	install -d ${DEPLOYDIR}
